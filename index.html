@@ -3,13 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coding Challenge 4</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Coding Challenge 5 - Mad Libs </title>
 </head>
-<body>
-    
-<h2>Hey! How are You today on </h2><br><h1>Valentines Day!</h1></br> <h2>best day of the year!!!!! </h2>
+<body>  
+<h1> My Mad Libs Story </h1>
+<form id="madlibsform"></form> 
+<label for="Katie"></label>
+<input type="text" id="name" value="">
 
+<label for="Happy"></label>
+<input type="text" id="adjective"> 
+
+<label for="Dog"></label>
+<select id="animal" > </select>
+<option value="dog"></option>
+<option value="cow"></option>
+<option value="elephant"></option>
+<option value="pig"></option>
+</select><br><br> 
+
+<label>Choose a mood: </label><br>
+<input type="radio" id="Happy" name="mood" value="Happy" checked>
+<label for="happy">Happy</label><br>
+<input type="radio" id="sad" name="mood" value="sad" >
+<label for="sad"></label><br><br> 
+
+<button type="button" onclick="generateStory ()" >Generate Story</button>
+</form> 
+
+<h2>Your Story</h2>
+<p id="story" ></p>
+
+<script> 
+    function generateStory() {
+const name = document.getElementById('name').Value; 
+const adjective = document.getElementById('adjective').Value;
+const animal =document.getElementById('animal').value;
+const mood= 
+document. querySelector ('input[name="mood"]: checked').Value;
+ 
+Const story ='{name} has a {adjective} {animal} that always make them feel {mood} every Friday at coding class.';
+document.getElementById ('story').innertext =story;
+    }
+
+</script>
 
 </body>
 </html>
