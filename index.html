@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coding Challenge 5 - Mad Libs </title>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Coding Challenge 5</title>
+    <link rel="stylesheet" href="style.ess">
 </head>
-<body>  
-<h1> My Mad Libs Story </h1>
-<form id="madlibsform"></form> 
-<label for="Katie"></label>
-<input type="text" id="name" value="">
+<body>
 
-<label for="Happy"></label>
-<input type="text" id="adjective"> 
 
-<label for="Dog"></label>
-<select id="animal" > </select>
-<option value="dog"></option>
-<option value="cow"></option>
-<option value="elephant"></option>
-<option value="pig"></option>
-</select><br><br> 
+<div class="box">
 
-<label>Choose a mood: </label><br>
-<input type="radio" id="Happy" name="mood" value="Happy" checked>
-<label for="happy">Happy</label><br>
-<input type="radio" id="sad" name="mood" value="sad" >
-<label for="sad"></label><br><br> 
+<h1>feb 28th Madlib</h1>
 
-<button type="button" onclick="generateStory ()" >Generate Story</button>
-</form> 
 
-<h2>Your Story</h2>
-<p id="story" ></p>
+<p>One day, a group of
+<span class="number"><input type="number" id="sirens" name="sirens" min="1" max="50" step="1" /></span>
+elephants were hanging out at the zoo. They were so bored and did not know what to do so one elephant decided to paint ‹span class="number"><input type="color" id="body" name="body" value="#7c0202" /></span>,
+on a blank canvas but the other elephants wanted to paint  ‹span class="number"><input type="color" id="body" name="body" value="#7c0202" /></span>
+Since all the elephants agreed on this one color everyonen was mad at the other elephant and «select id="night" name="night">
+<option value="hated">hated</option>
+    <option value="despised">despised</option>
+    <option value="disliked">disliked</option>
+    <option value="loathed">loathed/</option>
+</select>
+him for it. The elephants called for a group meeting and decided they wanted to put the other elephant in time out for painting the canvas the wrong color. 
+But after carefully talking for hours and hours they looked at the finished canvas and saw that he had painted a 
+<select id="night" name="night">
+     <option value="Family Picture">Family Picture</option>
+     <option value="Boycott zoo poster">Boycott zoo poster</option>
+     <option value="Picture of Himself">Picture of Himself</option>
+     <option value="Picture of Mom">Picture of Mom</option>
 
-<script> 
-    function generateStory() {
-const name = document.getElementById('name').Value; 
-const adjective = document.getElementById('adjective').Value;
-const animal =document.getElementById('animal').value;
-const mood= 
-document. querySelector ('input[name="mood"]: checked').Value;
- 
-Const story ='{name} has a {adjective} {animal} that always make them feel {mood} every Friday at coding class.';
-document.getElementById ('story').innertext =story;
-    }
+</select>
+to show them. They forgave him and they all hugged it out because at the end of the day nobody wants to see 
+<select id="night" name="night">
+    <option value="Elephants fighting">Eleephants Fighting</option>
+    <option value="Crying">crying/</option> 
+    <option value="Elephant war">Elephant war</option>
+</select>
+while they are at the zoo. 
 
-</script>
 
-</body>
+</p>
+</div>
+
+
+</body> 
 </html>
