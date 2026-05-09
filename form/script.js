@@ -286,11 +286,13 @@
     updateIndicator();
 
     // Entrance animation
-    document.addEventListener('DOMContentLoaded', () => {
+    requestAnimationFrame(() => {
         document.body.style.opacity = '0';
         document.body.style.transition = 'opacity 1.2s ease';
         requestAnimationFrame(() => {
-            document.body.style.opacity = '1';
+            requestAnimationFrame(() => {
+                document.body.style.opacity = '1';
+            });
         });
     });
 
