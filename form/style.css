@@ -1,0 +1,504 @@
+/* ═══════════════════════════════════════════
+   FO RM — Experimental Digital Notebook
+   Visual language: metallic surfaces, peeling
+   paint, glitch patterns, editorial typography,
+   fragmented identity, physical print media.
+   ═══════════════════════════════════════════ */
+
+:root {
+    --page-width: 38vw;
+    --page-height: 82vh;
+    --spiral-width: 28px;
+    --bg-deep: #0a0a0a;
+    --paper: #f8f6f2;
+    --paper-warm: #f5f0e8;
+    --ink: #0d0d0d;
+    --silver: #b8b3ad;
+    --silver-light: #d4d0c8;
+    --navy: #1a2030;
+    --accent-blue: #2a4060;
+    --spiral-metal: #7a7570;
+    --spiral-highlight: #a8a3a0;
+    --section-height: calc(var(--page-height) / 3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-deep);
+    font-family: 'Space Mono', monospace;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ─── Film Grain Overlay ─── */
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    animation: grainShift 0.5s steps(1) infinite;
+}
+
+@keyframes grainShift {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+    100% { transform: translate(1px, 1px); }
+}
+
+/* ─── Vignette ─── */
+.vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.7) 100%);
+}
+
+/* ─── Header ─── */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+    pointer-events: none;
+}
+
+.title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 0.9rem;
+    letter-spacing: 0.6em;
+    color: var(--silver);
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    pointer-events: none;
+}
+
+.hint {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+.page-indicator {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.25);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Notebook Container ─── */
+.notebook-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 2400px;
+}
+
+.notebook {
+    display: flex;
+    align-items: stretch;
+    height: var(--page-height);
+    transform: rotateX(1deg) rotateY(0deg);
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 30px 80px rgba(0,0,0,0.6));
+}
+
+/* ─── Pages ─── */
+.page {
+    width: var(--page-width);
+    height: 100%;
+    position: relative;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+.page-left {
+    border-radius: 3px 0 0 3px;
+    transform-origin: right center;
+    transform: rotateY(1.2deg);
+}
+
+.page-right {
+    border-radius: 0 3px 3px 0;
+    transform-origin: left center;
+    transform: rotateY(-1.2deg);
+}
+
+.page-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+/* ─── Page Textures ─── */
+.page-texture {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='5' seed='15'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+}
+
+/* ─── Page Shadows ─── */
+.page-shadow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.page-shadow-left {
+    right: 0;
+    background: linear-gradient(to left, rgba(0,0,0,0.12) 0%, transparent 100%);
+}
+
+.page-shadow-right {
+    left: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.12) 0%, transparent 100%);
+}
+
+/* ─── Spiral Binding ─── */
+.spiral-binding {
+    width: var(--spiral-width);
+    height: 100%;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.spiral-spine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, 
+        var(--spiral-metal) 0%, 
+        var(--spiral-highlight) 15%,
+        var(--spiral-metal) 30%,
+        var(--spiral-highlight) 50%,
+        var(--spiral-metal) 70%,
+        var(--spiral-highlight) 85%,
+        var(--spiral-metal) 100%
+    );
+    border-radius: 2px;
+    box-shadow: 
+        inset 1px 0 1px rgba(255,255,255,0.15),
+        inset -1px 0 1px rgba(0,0,0,0.4),
+        0 0 8px rgba(0,0,0,0.3);
+}
+
+.spiral-ring {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2.5px solid var(--spiral-metal);
+    position: relative;
+    z-index: 2;
+    box-shadow: 
+        0 2px 4px rgba(0,0,0,0.5),
+        inset 0 1px 1px rgba(255,255,255,0.1);
+    background: radial-gradient(ellipse at 35% 35%, 
+        var(--spiral-highlight) 0%, 
+        var(--spiral-metal) 40%, 
+        #4a4540 100%
+    );
+}
+
+/* ─── Sections ─── */
+.section {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+}
+
+.section:active {
+    cursor: grabbing;
+}
+
+.section-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.section-track.dragging {
+    transition: none;
+}
+
+.slide {
+    width: var(--page-width);
+    min-width: var(--page-width);
+    height: 100%;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Image slides show a portion of the full image */
+.slide-image {
+    background-size: cover;
+}
+
+/* Content slides (text pages) */
+.slide-content {
+    background: var(--paper);
+}
+
+.slide-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.type-page {
+    background: var(--paper);
+}
+
+/* ─── Editorial Typography ─── */
+.editorial-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    text-transform: uppercase;
+    position: absolute;
+}
+
+.text-left {
+    left: 12%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.text-right {
+    right: 12%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.type-text-top .editorial-text {
+    top: 40%;
+}
+
+.type-text-mid .editorial-text {
+    top: 50%;
+}
+
+.type-text-bottom .editorial-text {
+    bottom: 35%;
+    top: auto;
+    transform: none;
+}
+
+.type-text-walk .editorial-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+}
+
+/* ─── Logo Typography ─── */
+.logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 0.85;
+    position: absolute;
+}
+
+.logo-rm {
+    font-size: clamp(4rem, 8vw, 7rem);
+    top: 15%;
+    right: 15%;
+    letter-spacing: -0.02em;
+}
+
+.logo-fo {
+    font-size: clamp(4rem, 8vw, 7rem);
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    letter-spacing: -0.02em;
+}
+
+/* ─── Page Numbers ─── */
+.page-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: rgba(0,0,0,0.15);
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+}
+
+/* ─── Section Edge (separation lines) ─── */
+.section-edge {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.section-top .section-edge {
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.06);
+}
+
+.section-middle .section-edge {
+    box-shadow: 
+        inset 0 1px 0 rgba(0,0,0,0.04),
+        inset 0 -1px 0 rgba(0,0,0,0.04);
+}
+
+.section-bottom .section-edge {
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.06);
+}
+
+/* ─── Hover feedback ─── */
+.section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.section:hover::before {
+    border-color: rgba(180,170,160,0.08);
+}
+
+/* ─── Drag Visual Feedback ─── */
+.section.is-dragging::before {
+    border-color: rgba(180,170,160,0.15);
+}
+
+/* ─── Page Curl Effect ─── */
+.page-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0,0,0,0.06) 0%, transparent 100%);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.page-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.06) 0%, transparent 100%);
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ─── Responsive Adjustments ─── */
+@media (max-width: 1400px) {
+    :root {
+        --page-width: 40vw;
+        --page-height: 80vh;
+    }
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --page-width: 43vw;
+        --page-height: 75vh;
+        --spiral-width: 22px;
+    }
+    
+    .site-header {
+        padding: 16px 24px;
+    }
+    
+    .title {
+        font-size: 0.75rem;
+    }
+
+    .spiral-ring {
+        width: 16px;
+        height: 16px;
+    }
+
+    .editorial-text {
+        font-size: 0.55rem;
+    }
+
+    .logo-rm, .logo-fo {
+        font-size: clamp(3rem, 7vw, 5rem);
+    }
+}
